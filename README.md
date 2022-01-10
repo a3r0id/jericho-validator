@@ -22,10 +22,10 @@ try:
 except jerichoExceptions.ImageTooLarge:
     print('Image is too large.')
 
-except jerichoExceptions.Exceptions.EmptyFileName:
+except jerichoExceptions.EmptyFileName:
     print('File name is empty.')
     
-except jerichoExceptions.Exceptions.UnsupportedImageType:
+except jerichoExceptions.UnsupportedImageType:
     print('Image type not supported.')
 
 except Exception as e:
