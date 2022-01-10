@@ -3,7 +3,7 @@ from jericho import Jericho
 
 ## [Module Usage]: 
 ## >>> from jericho_validator import jerichoValidator
-## >>> jerichoValidator(b64Url, filename="image", maxSize=JerichoUtils.bytes10MB)
+## >>> jerichoValidator(b64Url)
 
 jerichoValidator  = Jericho.jericho
 jerichoExceptions = Jericho.Exceptions
