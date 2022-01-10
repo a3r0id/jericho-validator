@@ -7,7 +7,7 @@ description = "Validate arbitrary base64-encoded image uploads as incoming data 
 required = ["Pillow==9.0.0"]
 
 setuptools.setup(name='jericho_validator',
-    version='1.1.1',
+    version='1.1.12',
     description=description,
     author='github.com/hostinfodev',
     author_email='aero@recon.us.com',

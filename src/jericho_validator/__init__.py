@@ -1,18 +1,22 @@
 # 2022 - Jericho Validator - __init__.py
 
 import base64
-from PIL import Image
-from io import BytesIO
 import string
+from PIL       import Image
+from io        import BytesIO
+from sys       import exc_info
+from traceback import print_exception
 
 class Jericho:
     
     class JerichoUtils:
+        printErrors = False
+        
         bytes10MB = 10485760
         
         extensionConversions = [
             ["PNG", "png"],
-            ["JPG", "jpg"],
+            ["JPEG", "jpg"],
             ["JPEG", "jpeg"],
             ["GIF", "gif"],
             ["BMP", "bmp"],
@@ -33,7 +37,7 @@ class Jericho:
         def checkUrl(b64Url):
             thisFormat = None
             for format in Jericho.JerichoUtils.imageFormats:
-                if b64Url.startswith(format[0]):
+                if b64Url.lower().startswith(format[0]):
                     thisFormat = format
                     break
                 
@@ -130,12 +134,13 @@ class Jericho:
         # Check integrity of filename
         if '.' in filename:
             filename = filename.split('.')[0]
-            
-        if len(filename) == 0:
-            raise Jericho.Exceptions.EmptyFileName("Empty filename")
+        
         
         # Validate filename characters
         filename = ''.join(x for x in filename if x in string.printable)
+        
+        if len(filename) == 0:
+            raise Jericho.Exceptions.EmptyFileName("Empty filename")
         
         # Initialize with an invalid imageObject
         vector     = Jericho.InvalidB64Url()
@@ -162,7 +167,11 @@ class Jericho:
                 buffer_ = BytesIO()
                 
                 # Save the image to the buffer
-                image_.save(buffer_, save_all=True, format=actual_format_)
+                if actual_format_ == 'GIF':
+                    image_.save(buffer_, save_all=True, format=actual_format_)
+                    
+                else:
+                    image_.save(buffer_, format=actual_format_)
                 
                 # Get the raw bytes of the valid pillow image
                 bytes_ = buffer_.getvalue()
@@ -209,8 +218,12 @@ class Jericho:
                 # Boolean indicating if the image is valid
                 vector.isValid = True
                 
-            except Exception as e:
-                print(e)
+            except Exception:
+                
+                if Jericho.JerichoUtils.printErrors:
+                    exc_type, exc_value, exc_traceback = exc_info()
+                    print_exception(exc_type, exc_value, exc_traceback)
+                
                 # Invalid pillow image bytes, something went wrong or the image is invalid/corrupt
                 vector.isValid = False
                 
