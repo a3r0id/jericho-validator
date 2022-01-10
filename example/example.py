@@ -1,4 +1,4 @@
-from jericho_validator import Jericho
+from jericho_validator import jerichoValidator, jerichoExceptions
 
 with open('example.png.b64') as f:
     data = f.read()
@@ -6,15 +6,15 @@ with open('example.png.b64') as f:
 try:
     
     # Check the data URL (image)
-    j = Jericho.jericho(data)
+    j = jerichoValidator(data)
 
-except Jericho.Exceptions.ImageTooLarge:
+except jerichoExceptions.ImageTooLarge:
     print('Image is too large.')
 
-except Jericho.Exceptions.EmptyFileName:
+except jerichoExceptions.Exceptions.EmptyFileName:
     print('File name is empty.')
     
-except Jericho.Exceptions.UnsupportedImageType:
+except jerichoExceptions.Exceptions.UnsupportedImageType:
     print('Image type not supported.')
 
 except Exception as e:

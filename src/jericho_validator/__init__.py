@@ -5,4 +5,5 @@ from jericho import Jericho
 ## >>> from jericho_validator import jerichoValidator
 ## >>> jerichoValidator(b64Url, filename="image", maxSize=JerichoUtils.bytes10MB)
 
-jerichoValidator = Jericho.jericho
+jerichoValidator  = Jericho.jericho
+jerichoExceptions = Jericho.Exceptions
