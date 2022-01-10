@@ -2,14 +2,16 @@
  Validate arbitrary image uploads from incoming data urls while preserving file integrity but removing EXIF and unwanted artifacts and RCE exploit potential.
 
 ### Installation
-PyPi: `pip install jericho_validator`
+PyPi: `pip install jericho-validator`
 
 Manually: `python setup.py install`
 
- ### Example Usage
+### Example Usage
 ```python
 
-from jericho_validator import jerichoValidator, jerichoExceptions
+from jericho_validator import Jericho
+
+# [i] View on GitHub for example files
 
 with open('example.png.b64') as f:
     data = f.read()
@@ -17,15 +19,15 @@ with open('example.png.b64') as f:
 try:
     
     # Check the data URL (image)
-    j = jerichoValidator(data)
+    j = Jericho.jericho(data)
 
-except jerichoExceptions.ImageTooLarge:
+except Jericho.Exceptions.ImageTooLarge:
     print('Image is too large.')
 
-except jerichoExceptions.EmptyFileName:
+except Jericho.Exceptions.EmptyFileName:
     print('File name is empty.')
     
-except jerichoExceptions.UnsupportedImageType:
+except Jericho.Exceptions.UnsupportedImageType:
     print('Image type not supported.')
 
 except Exception as e:
